@@ -20,7 +20,7 @@ from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 logging.config.dictConfig(LOGGING_CONFIG)
 
-cut = 1000
+cut = 500
 
 # Load user configurations
 user_config = configparser.ConfigParser()
@@ -63,14 +63,16 @@ def generate_image(uid, comfy_prompt, model, steps):
         logging.error(f"Failed to generate image for UID: {uid}. Error: {e}")
 
 
-def get_country_name_from_code(code):
-    """Get country name from 3-letter ISO code."""
-    try:
-        country = pycountry.countries.get(alpha_3=code.upper())
-        return country.name if country else "Unknown country code"
-    except KeyError:
-        logging.warning(f"Invalid country code provided: {code}")
-        return "Invalid country code"
+def get_country_name(app_config, country_code):
+    # First check if it's a custom mapping
+    if country_code in app_config["facial_characteristics"]:
+        return app_config["facial_characteristics"][country_code]
+    
+    # Use pycountry for standard country codes
+    country = pycountry.countries.get(alpha_3=country_code)
+    if country:
+        return country.name
+    return "Unknown Country"
 
 
 def generate_prompts_for_players(players, app_config):
@@ -81,7 +83,7 @@ def generate_prompts_for_players(players, app_config):
             logging.debug(f"Generating prompt for {player[0]} - {player[8]}")
             os.makedirs(output_folder, exist_ok=True)
 
-            country = get_country_name_from_code(player[1])
+            country = get_country_name(app_config, player[1])
             facial_characteristics = random.choice(app_config["facial_characteristics"])
             hair_length = app_config["hair_length"][player[5]]
             hair_colour = app_config["hair_color"][player[6]]
@@ -95,7 +97,7 @@ def generate_prompts_for_players(players, app_config):
                 age=player_age,
                 country=country,
                 facial_characteristics=facial_characteristics or "no facial hair",
-                hair=f"{hair_length} {hair_colour} {hair}",
+                hair=f"{hair_length} {hair_colour}",
             )
             logging.debug(f"Generated prompt: {prompt}")
             prompt = f"{player[0]}:{prompt}"
@@ -152,8 +154,9 @@ def main():
         )
 
     try:
-        remove_bg_from_files_in_dir(output_folder)
         resize_images(output_folder)
+        remove_bg_from_files_in_dir(output_folder)
+        
         create_config_xml(output_folder)
         logging.debug("Post-processing complete.")
     except Exception as e:
