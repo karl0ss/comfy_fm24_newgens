@@ -1,7 +1,7 @@
-# Football Manager AI Face Generator
+# ComfyUI FM NewGen
 
-## Overview
-
+<!-- ## Overview -->
+<!-- 
 This tool generates AI faces for Football Manager, compatible with NewGan and similar AI face pack installers (FMRTE). It uses the DeepInfra API to create realistic player faces based on various ethnic groups and facial characteristics. The image generation model is Flux ('schnell' by default). You can obtain your DeepInfra API key from [here](https://deepinfra.com/).
 
 Short tutorial on how to use: https://www.youtube.com/watch?v=vldujOEPWoo
@@ -117,4 +117,4 @@ For issues or questions, please open an issue on the GitHub repository.
 
 ## License
 
-This project is open-source and available under the MIT License.
+This project is open-source and available under the MIT License. -->
