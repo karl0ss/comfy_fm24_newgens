@@ -27,7 +27,7 @@ p = inflect.engine()
 output_folder = user_config["general"]["output_dir"]
 
 
-def generate_image(uid, comfy_prompt, model):
+def generate_image(uid, comfy_prompt, model, steps):
     """Generate an image using the Comfy API."""
     url = user_config["general"]["url"]
 
@@ -37,7 +37,7 @@ def generate_image(uid, comfy_prompt, model):
 
     # Set workflow parameters
     wf.set_node_param("KSampler", "seed", random.getrandbits(32))
-    wf.set_node_param("KSampler", "steps", 6)
+    wf.set_node_param("KSampler", "steps", steps)
     wf.set_node_param("positive", "text", comfy_prompt)
     wf.set_node_param("Save Image", "filename_prefix", uid)
     wf.set_node_param("Load Checkpoint", "ckpt_name", model)
@@ -127,6 +127,7 @@ def main():
             uid,
             comfy_prompt,
             user_config["general"]["model"],
+            args.num_inference_steps
         )
     remove_bg_from_files_in_dir(output_folder)
     resize_images(output_folder)
