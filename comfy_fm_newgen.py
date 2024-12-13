@@ -126,21 +126,12 @@ def main():
 
     # Parse the RTF file
     try:
-        rtf_file = rtf.parse_rtf(args.rtf_file)[:10]
+        rtf_file = rtf.parse_rtf(args.rtf_file)[:100]
         logging.info(f"Parsed RTF file successfully. Found {len(rtf_file)} players.")
     except FileNotFoundError:
         logging.error(f"RTF file not found: {args.rtf_file}")
         sys.exit(1)
-
-    # Extract unique values
-    try:
-        hair_length = list(set(item[5] for item in rtf_file))
-        hair_colour = list(set(item[6] for item in rtf_file))
-        skin_tone = list(set(item[7] for item in rtf_file))
-    except IndexError as e:
-        logging.error(f"Error extracting player attributes: {e}")
-        sys.exit(1)
-
+        
     # Load configurations
     try:
         with open("config.json", "r") as f:

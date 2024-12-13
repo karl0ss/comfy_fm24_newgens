@@ -1,0 +1,38 @@
+Hair Lengths with examples (sorted):
+1: [{'UID': '2002099259', 'Name': 'Samba Thiandoum'}, {'UID': '2002086544', 'Name': 'Youssef Ramzy'}, {'UID': '2002088012', 'Name': 'William Mukendi'}]  SHORT
+2: [{'UID': '2002069662', 'Name': 'Ibrahima Touré'}, {'UID': '2002105370', 'Name': 'Marcelo Fernando'}, {'UID': '2000210457', 'Name': 'Goran Begic'}]    MEDIUM
+3: [{'UID': '2002067856', 'Name': 'Jurdany Straver'}, {'UID': '2002069623', 'Name': 'Aziz Hegab'}, {'UID': '2000038705', 'Name': 'Óscar Palacios'}]      LONG
+4: [{'UID': '2002099193', 'Name': 'Andrea Marcato'}, {'UID': '2002099411', 'Name': 'Massimo Todaro'}, {'UID': '2000234613', 'Name': 'Marcello Saia'}]    BALD
+
+Hair Colours with examples (sorted):
+1: [{'UID': '2000187083', 'Name': 'Marvin Wattiau'}, {'UID': '2000055582', 'Name': 'Håkon Soltvedt'}, {'UID': '19361843', 'Name': 'Petar Andersson'}] BLONDE
+2: [{'UID': '2002067750', 'Name': 'Silvio Kovacevic'}, {'UID': '2002069505', 'Name': 'Steve Hubbard'}, {'UID': '2002069418', 'Name': 'Matej Kovač'}] strawberry blonde
+3: [{'UID': '2002068177', 'Name': 'Lorenzo Granelli'}, {'UID': '2002096503', 'Name': 'Christian Williams'}, {'UID': '2002096251', 'Name': 'Paulo Cáceres'}] light brown
+4: [{'UID': '2002069357', 'Name': 'Dennis Dailly'}, {'UID': '2000199177', 'Name': 'Ian Warner'}, {'UID': '2002069790', 'Name': 'Killian Lenormand'}] bright orange
+5: [{'UID': '2002099259', 'Name': 'Samba Thiandoum'}, {'UID': '2002069662', 'Name': 'Ibrahima Touré'}, {'UID': '2002105370', 'Name': 'Marcelo Fernando'}] black and grey
+6: [{'UID': '2002121630', 'Name': 'Thiago Tourinho'}, {'UID': '2002085736', 'Name': 'Vinicius'}, {'UID': '2002098155', 'Name': 'Roberto Carlos'}]   White
+7: [{'UID': '2002069774', 'Name': 'Tómas Sigurðarson'}, {'UID': '2002068148', 'Name': 'Gjergji Jusufi'}, {'UID': '2000148350', 'Name': 'John Ball'}] yellow
+8: [{'UID': '2002068153', 'Name': 'Jody Combe'}, {'UID': '2002100076', 'Name': 'Leutrim Ismaili'}, {'UID': '2002068068', 'Name': 'Bernd Heller'}]   dark blonde
+9: [{'UID': '2000104880', 'Name': 'Oliver Rhodes'}, {'UID': '2002068156', 'Name': 'Jeremy Sutton'}, {'UID': '2002068447', 'Name': 'Oliver Brown'}]  light brown
+10: [{'UID': '2000249120', 'Name': 'Daniel Williams'}, {'UID': '2002098384', 'Name': 'Kiril Vasilev'}, {'UID': '2000269855', 'Name': 'Aldin Cetin'}]  BROWN
+11: [{'UID': '2002069421', 'Name': 'Peter Pasfield'}, {'UID': '2002069674', 'Name': 'Fernando Cantera'}, {'UID': '2002098332', 'Name': 'Edson Garza'}] Light Brown
+12: [{'UID': '2000210457', 'Name': 'Goran Begic'}, {'UID': '29226266', 'Name': 'Jens Waidner'}, {'UID': '2002068381', 'Name': 'Jonathan Neiland'}]  Black
+13: [{'UID': '2002098622', 'Name': 'Mikkel Rasmussen'}, {'UID': '2002069251', 'Name': 'Walter Pérez'}, {'UID': '2002069890', 'Name': 'Phil Foster'}] Orange
+14: [{'UID': '2002100040', 'Name': 'Luka Jovanović'}, {'UID': '2002068194', 'Name': 'Alex Waldron'}, {'UID': '14250947', 'Name': 'Kylian Langlois'}] Ginger
+15: [{'UID': '2002086544', 'Name': 'Youssef Ramzy'}, {'UID': '2002088012', 'Name': 'William Mukendi'}, {'UID': '2002069623', 'Name': 'Aziz Hegab'}] black
+16: [{'UID': '2002067856', 'Name': 'Jurdany Straver'}, {'UID': '2002068557', 'Name': 'Patrick Coley'}, {'UID': '2002096137', 'Name': 'Francieudo'}] black
+17: [{'UID': '2002086195', 'Name': 'Ramon'}, {'UID': '2002109810', 'Name': 'Jaime Cousillas'}] Platinum 
+18: [{'UID': '2002096495', 'Name': 'Aridai'}] Grey
+
+Skin Tones with examples (sorted):
+0: [{'UID': '2002067856', 'Name': 'Jurdany Straver'}, {'UID': '2000187083', 'Name': 'Marvin Wattiau'}, {'UID': '2000210457', 'Name': 'Goran Begic'}] WHITE
+1: [{'UID': '2002105370', 'Name': 'Marcelo Fernando'}, {'UID': '2002096137', 'Name': 'Francieudo'}, {'UID': '2000038705', 'Name': 'Óscar Palacios'}] Beige
+2: [{'UID': '2002086544', 'Name': 'Youssef Ramzy'}, {'UID': '2002069623', 'Name': 'Aziz Hegab'}, {'UID': '2002069687', 'Name': 'Rafik El Hilali'}]  Brown
+3: [{'UID': '2002099259', 'Name': 'Samba Thiandoum'}, {'UID': '2002069662', 'Name': 'Ibrahima Touré'}, {'UID': '2002088012', 'Name': 'William Mukendi'}] black
+4: [{'UID': '2002099204', 'Name': 'Agnelo Ghosh'}, {'UID': '2002068758', 'Name': 'Dipu Singh'}, {'UID': '2002068376', 'Name': 'Jason Benjamin'}]    light black
+5: [{'UID': '2002069522', 'Name': 'Valgeir Haraldsson'}, {'UID': '2002068519', 'Name': 'Supradit Jantanarm'}, {'UID': '19387456', 'Name': 'Thanik Pathumchai'}] light brown
+6: [{'UID': '2002068324', 'Name': 'Timoci Pillay'}, {'UID': '2002105665', 'Name': 'Rusiate Nair'}, {'UID': '2000144679', 'Name': 'Brian Peterson'}] dark brown
+7: [{'UID': '2002096094', 'Name': 'Banderley Peña'}, {'UID': '2002105644', 'Name': 'Johan García'}, {'UID': '2002069019', 'Name': 'Dante Acevedo'}] light white
+8: [{'UID': '2002105661', 'Name': 'José Matamalai'}, {'UID': '2002121132', 'Name': 'Gaspar Santos'}, {'UID': '2002134581', 'Name': 'Jeremy Goldrick'}] brown
+9: [{'UID': '2002068557', 'Name': 'Patrick Coley'}, {'UID': '2002088009', 'Name': 'Abel Díez'}, {'UID': '2002096074', 'Name': 'Josimar'}] black
+10: [{'UID': '2002085528', 'Name': 'Noh Chan-Soo'}, {'UID': '19347507', 'Name': 'Kim In-Ho'}, {'UID': '2002069549', 'Name': 'Zhang Ding'}] asian

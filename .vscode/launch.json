@@ -13,7 +13,7 @@
             "justMyCode": false,
             "args": [
                 "--num_inference_steps",
-                "6",
+                "10",
                 "--rtf_file",
                 "./NewGen.rtf"
             ]

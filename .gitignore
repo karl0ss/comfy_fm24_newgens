@@ -3,3 +3,4 @@ config.cfg
 generated_images/*
 script.log
 **/*.pyc
+*.rtf
