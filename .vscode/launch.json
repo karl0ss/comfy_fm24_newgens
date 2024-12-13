@@ -11,14 +11,10 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "--n_per_country",
-                "2",
-                "--width",
-                "1024",
-                "--height",
-                "1024",
                 "--num_inference_steps",
-                "2"
+                "6",
+                "--rtf_file",
+                "./2030New.rtf"
             ]
         }
     ]
