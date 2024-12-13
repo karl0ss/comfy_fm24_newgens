@@ -1,2 +1,3 @@
 venv/*
 config.cfg
+generated_images/*
