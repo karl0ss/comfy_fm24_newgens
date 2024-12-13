@@ -20,6 +20,8 @@ from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 logging.config.dictConfig(LOGGING_CONFIG)
 
+cut = 1000
+
 # Load user configurations
 user_config = configparser.ConfigParser()
 try:
@@ -126,7 +128,7 @@ def main():
 
     # Parse the RTF file
     try:
-        rtf_file = rtf.parse_rtf(args.rtf_file)[:100]
+        rtf_file = rtf.parse_rtf(args.rtf_file)[:cut]
         logging.info(f"Parsed RTF file successfully. Found {len(rtf_file)} players.")
     except FileNotFoundError:
         logging.error(f"RTF file not found: {args.rtf_file}")
