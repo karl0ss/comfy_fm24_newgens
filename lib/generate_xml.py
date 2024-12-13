@@ -19,7 +19,7 @@ def create_config_xml(folder_path):
             uid = os.path.splitext(filename)[0]
 
             # Create a record for each file
-            ET.SubElement(maps, "record", from_=uid, to=f"graphics/pictures/person/r-{uid}/portrait")
+            ET.SubElement(maps, "record", attrib={"from": uid, "to": f"graphics/pictures/person/r-{uid}/portrait"})
 
     # Create the XML tree
     tree = ET.ElementTree(root)
