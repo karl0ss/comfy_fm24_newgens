@@ -15,7 +15,7 @@
                 "--num_inference_steps",
                 "6",
                 "--rtf_file",
-                "./2030New.rtf"
+                "./NewGen.rtf"
             ]
         }
     ]
