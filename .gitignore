@@ -2,3 +2,4 @@ venv/*
 config.cfg
 generated_images/*
 script.log
+**/*.pyc
