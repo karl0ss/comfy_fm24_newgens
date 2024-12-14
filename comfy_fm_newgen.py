@@ -23,7 +23,7 @@ from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 logging.config.dictConfig(LOGGING_CONFIG)
 
-cut = 500
+cut = 100
 update = False
 use_gpu = False
 
@@ -72,7 +72,7 @@ def get_country_name(app_config, country_code):
     # First check if it's a custom mapping
     if country_code in app_config["facial_characteristics"]:
         return app_config["facial_characteristics"][country_code]
-    
+
     # Use pycountry for standard country codes
     country = pycountry.countries.get(alpha_3=country_code)
     if country:
@@ -112,6 +112,36 @@ def generate_prompts_for_players(players, app_config):
     return prompts
 
 
+def post_process_images(output_folder, update, processed_players):
+    """
+    Handles post-processing tasks for generated images.
+
+    Args:
+        output_folder (str): Path to the folder where images are stored.
+        update (bool): Flag to determine if XML config should be updated.
+        processed_players (list): List of processed player IDs.
+    """
+    try:
+        # Resize images to desired dimensions
+        resize_images(output_folder)
+        logging.debug("Images resized successfully.")
+
+        # Remove background from images using GPU if available
+        remove_bg_from_files_in_dir(output_folder, use_gpu=use_gpu)
+        logging.debug("Background removed from images.")
+
+        # Update or create configuration XML
+        if update:
+            append_to_config_xml(output_folder, processed_players)
+            logging.debug("Configuration XML updated.")
+        else:
+            create_config_xml(output_folder)
+            logging.debug("Configuration XML created.")
+    except Exception as e:
+        logging.error(f"Post-processing failed: {e}")
+        raise  # Re-raise the exception to ensure the script stops if post-processing fails.
+
+
 def main():
     """Main function for generating images."""
     parser = argparse.ArgumentParser(description="Generate images for country groups")
@@ -135,12 +165,12 @@ def main():
 
     # Parse the RTF file
     try:
-        rtf_file = rtf.parse_rtf(args.rtf_file)[:cut]
+        rtf_file = random.sample(rtf.parse_rtf(args.rtf_file),cut)
         logging.info(f"Parsed RTF file successfully. Found {len(rtf_file)} players.")
     except FileNotFoundError:
         logging.error(f"RTF file not found: {args.rtf_file}")
         sys.exit(1)
-        
+
     # Load configurations
     try:
         with open("config.json", "r") as f:
@@ -149,11 +179,13 @@ def main():
     except FileNotFoundError:
         logging.error("config.json file not found.")
         sys.exit(1)
-        
+
     # Check for processed
     try:
         if update:
-            values_from_config = extract_from_values(f"{user_config['general']['output_dir']}config.xml")
+            values_from_config = extract_from_values(
+                f"{user_config['general']['output_dir']}config.xml"
+            )
             # Extract the IDs from list_a
             ids_in_b = [item for item in values_from_config]
 
@@ -172,17 +204,16 @@ def main():
             uid = prompt.split(":")[0]
             comfy_prompt = prompt.split(":")[1]
             generate_image(
-                uid, comfy_prompt, user_config["general"]["model"], args.num_inference_steps
+                uid,
+                comfy_prompt,
+                user_config["general"]["model"],
+                args.num_inference_steps,
             )
 
         try:
-            resize_images(output_folder)
-            remove_bg_from_files_in_dir(output_folder, use_gpu=use_gpu)
-            if update:
-                append_to_config_xml(output_folder, [item[0] for item in players_to_process])
-            else:
-                create_config_xml(output_folder)
-            logging.debug("Post-processing complete.")
+            post_process_images(
+                output_folder, update, [item[0] for item in players_to_process]
+            )
         except Exception as e:
             logging.error(f"Post-processing failed: {e}")
     else:
