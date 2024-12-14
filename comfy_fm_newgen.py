@@ -13,14 +13,19 @@ import logging.config
 from tqdm import tqdm
 from lib.rtf_parser import RTF_Parser
 from lib.remove_bg import remove_bg_from_files_in_dir
-from lib.generate_xml import create_config_xml
+from lib.generate_xml import create_config_xml, append_to_config_xml
 from lib.resize_images import resize_images
+from lib.xml_reader import extract_from_values
 from lib.logging import LOGGING_CONFIG
+
+# from simple_term_menu import TerminalMenu
 from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 logging.config.dictConfig(LOGGING_CONFIG)
 
-cut = None
+cut = 500
+update = False
+use_gpu = False
 
 # Load user configurations
 user_config = configparser.ConfigParser()
@@ -144,24 +149,45 @@ def main():
     except FileNotFoundError:
         logging.error("config.json file not found.")
         sys.exit(1)
-
-    prompts = generate_prompts_for_players(rtf_file, app_config)
-    for prompt in tqdm(prompts, desc="Generating Images"):
-        uid = prompt.split(":")[0]
-        comfy_prompt = prompt.split(":")[1]
-        generate_image(
-            uid, comfy_prompt, user_config["general"]["model"], args.num_inference_steps
-        )
-
-    try:
-        resize_images(output_folder)
-        remove_bg_from_files_in_dir(output_folder)
         
-        create_config_xml(output_folder)
-        logging.debug("Post-processing complete.")
-    except Exception as e:
-        logging.error(f"Post-processing failed: {e}")
+    # Check for processed
+    try:
+        if update:
+            values_from_config = extract_from_values(f"{user_config['general']['output_dir']}config.xml")
+            # Extract the IDs from list_a
+            ids_in_b = [item for item in values_from_config]
 
+            # Filter list_a to remove inner lists whose first item matches an ID in list_b
+            players_to_process = [item for item in rtf_file if item[0] not in ids_in_b]
+        else:
+            players_to_process = rtf_file
+    except FileNotFoundError:
+        logging.error("config.json file not found.")
+        sys.exit(1)
+    if len(players_to_process) > 0:
+        print(f"Processing {len(players_to_process)} players")
+        logging.info(f"Processing {len(players_to_process)} players")
+        prompts = generate_prompts_for_players(players_to_process, app_config)
+        for prompt in tqdm(prompts, desc="Generating Images"):
+            uid = prompt.split(":")[0]
+            comfy_prompt = prompt.split(":")[1]
+            generate_image(
+                uid, comfy_prompt, user_config["general"]["model"], args.num_inference_steps
+            )
+
+        try:
+            resize_images(output_folder)
+            remove_bg_from_files_in_dir(output_folder, use_gpu=use_gpu)
+            if update:
+                append_to_config_xml(output_folder, [item[0] for item in players_to_process])
+            else:
+                create_config_xml(output_folder)
+            logging.debug("Post-processing complete.")
+        except Exception as e:
+            logging.error(f"Post-processing failed: {e}")
+    else:
+        print(f"{len(rtf_file)} players already processed")
+        logging.info(f"{len(rtf_file)} players already processed")
     logging.info("Image generation complete for players in RTF file.")
 
 
