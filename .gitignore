@@ -1,6 +1,6 @@
 venv/*
 config.cfg
-generated_images/*
+generated_*/*
 script.log
 **/*.pyc
 *.rtf
