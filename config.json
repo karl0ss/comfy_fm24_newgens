@@ -88,5 +88,5 @@
     "3": "Long",
     "4": "Bald"
   },
-  "prompt": "Ultra-realistic close-up headshot of a {skin_tone} skinned male soccer player with a white background looking at the camera. The player is {age} years old, from {country}, with {facial_characteristics} and {hair} hair. He is facing the camera with a confident expression, wearing a soccer jersey. The lighting is natural and soft, emphasizing facial features and skin texture"
+  "prompt": "Ultra-realistic close-up headshot of a {skin_tone} skinned male soccer player with a plain background looking at the camera. The player is {age} years old, from {country}, with {facial_characteristics} and {hair} hair. He is facing the camera with a confident expression, wearing a soccer jersey. The lighting is natural and soft, emphasizing facial features and skin texture"
 }

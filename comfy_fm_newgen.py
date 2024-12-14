@@ -20,7 +20,7 @@ from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 logging.config.dictConfig(LOGGING_CONFIG)
 
-cut = 500
+cut = 200
 
 # Load user configurations
 user_config = configparser.ConfigParser()
