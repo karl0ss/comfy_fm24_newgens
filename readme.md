@@ -1,6 +1,6 @@
 # Comfy UI NewGens
 Use ComfyUI to generate NewGen images for Football Manager 2024
-# Intro
+
 ![enter image description here](https://preview.redd.it/comfy-fm24-newgens-v0-8vf2u79pn17e1.png?width=1080&crop=smart&auto=webp&s=e2e3d39d559507e7b2fee7150fc14cfdefb23c15)
 -   "There are 10000s of faces out there already"
 -   "There are tools that work the same already?"  
