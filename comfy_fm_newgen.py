@@ -12,7 +12,7 @@ import logging.config
 
 from tqdm import tqdm
 from lib.rtf_parser import RTF_Parser
-from lib.remove_bg import remove_bg_from_files_in_dir
+from lib.remove_bg import remove_bg_from_file_list
 from lib.generate_xml import create_config_xml, append_to_config_xml
 from lib.resize_images import resize_images
 from lib.xml_reader import extract_from_values
@@ -23,14 +23,14 @@ from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 logging.config.dictConfig(LOGGING_CONFIG)
 
-cut = 10
-update = False
+cut = 2
+update = True
 use_gpu = False
 
 # Load user configurations
 user_config = configparser.ConfigParser()
 try:
-    user_config.read("config.cfg")
+    user_config.read("user_config.cfg")
     output_folder = user_config["general"]["output_dir"]
     logging.debug("Configuration loaded successfully.")
 except KeyError as e:
@@ -122,11 +122,11 @@ def post_process_images(output_folder, update, processed_players, football_manag
     """
     try:
         # Resize images to desired dimensions
-        resize_images(output_folder)
+        resize_images(output_folder, processed_players)
         logging.debug("Images resized successfully.")
 
         # Remove background from images using GPU if available
-        remove_bg_from_files_in_dir(output_folder, use_gpu=use_gpu)
+        remove_bg_from_file_list(output_folder,processed_players, use_gpu=use_gpu)
         logging.debug("Background removed from images.")
 
         # Update or create configuration XML
@@ -134,7 +134,7 @@ def post_process_images(output_folder, update, processed_players, football_manag
             append_to_config_xml(output_folder, processed_players, football_manager_version)
             logging.debug("Configuration XML updated.")
         else:
-            create_config_xml(output_folder, football_manager_version)
+            create_config_xml(output_folder,processed_players, football_manager_version)
             logging.debug("Configuration XML created.")
     except Exception as e:
         logging.error(f"Post-processing failed: {e}")
@@ -172,11 +172,11 @@ def main():
 
     # Load configurations
     try:
-        with open("config.json", "r") as f:
+        with open("app_config.json", "r") as f:
             app_config = json.load(f)
         logging.debug("Application configuration loaded successfully.")
     except FileNotFoundError:
-        logging.error("config.json file not found.")
+        logging.error("app_config.json file not found.")
         sys.exit(1)
 
     # Check for processed
