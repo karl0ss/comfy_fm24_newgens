@@ -39,10 +39,30 @@ def add_uid_to_maps(maps, uid, football_manager_version):
     for record in maps.findall("record"):
         if record.attrib.get("from") == str(uid):
             return  # UID already exists
-    ET.SubElement(maps, "record", attrib={"from": str(uid), "to": f"graphics/pictures/person/{prefix}{uid}/portrait"})
+    ET.SubElement(
+        maps,
+        "record",
+        attrib={
+            "from": str(uid),
+            "to": f"graphics/pictures/person/{prefix}{uid}/portrait",
+        },
+    )
 
 
-def create_config_xml(folder_path, football_manager_version):
+def update_player_file_list(folder_path, processed_players):
+    """
+    Updates each player in the list with the full file path and `.png` extension.
+
+    Args:
+        folder_path (str): The path to the folder where the player files are stored.
+        processed_players (list): A list of player names to be updated.
+    """
+    for i in range(len(processed_players)):
+        processed_players[i] = os.path.join(folder_path, f"{processed_players[i]}.png")
+    return processed_players
+
+
+def create_config_xml(folder_path, processed_players, football_manager_version):
     """
     Create a new config.xml file based on .png files in the folder.
     """
@@ -53,10 +73,8 @@ def create_config_xml(folder_path, football_manager_version):
     maps = ET.SubElement(root, "list", id="maps")
 
     # Add records for each .png file
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".png"):
-            uid = os.path.splitext(filename)[0]
-            add_uid_to_maps(maps, uid, football_manager_version)
+    for player in processed_players:
+        add_uid_to_maps(maps, player, football_manager_version)
 
     # Save the XML file
     output_path = os.path.join(folder_path, "config.xml")
@@ -65,7 +83,7 @@ def create_config_xml(folder_path, football_manager_version):
     print(f"Config XML created at: {output_path}")
 
 
-def append_to_config_xml(folder_path, uid_list, football_manager_version):
+def append_to_config_xml(folder_path, processed_players, football_manager_version):
     """
     Append new UIDs to an existing config.xml file.
     """
@@ -76,7 +94,7 @@ def append_to_config_xml(folder_path, uid_list, football_manager_version):
     maps = get_or_create_maps_list(root)
 
     # Add new UIDs
-    for uid in uid_list:
+    for uid in processed_players:
         add_uid_to_maps(maps, uid, football_manager_version)
 
     # Save the updated XML file
