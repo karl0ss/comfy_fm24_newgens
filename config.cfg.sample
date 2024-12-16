@@ -1,4 +1,7 @@
 [general]
-url = 
-model = realisticVisionV60B1_v51HyperVAE.safetensors
+football_manager_version = 2024
 output_dir = ./generated_images/
+
+[comfyui]
+comfyui_url = 
+model = realisticVisionV60B1_v51HyperVAE.safetensors

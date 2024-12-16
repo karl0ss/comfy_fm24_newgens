@@ -1,63 +1,84 @@
 import os
 import xml.etree.ElementTree as ET
 
-def create_config_xml(folder_path):
-    # Define the root element
-    root = ET.Element("record")
 
-    # Add resource manager options
+def parse_or_create_xml(file_path, create_if_missing=True):
+    """
+    Parse an existing XML file or create a new one if it doesn't exist.
+    """
+    if os.path.exists(file_path):
+        tree = ET.parse(file_path)
+        root = tree.getroot()
+    elif create_if_missing:
+        # Create a new XML structure if file doesn't exist
+        root = ET.Element("record")
+        tree = ET.ElementTree(root)
+    else:
+        raise FileNotFoundError(f"The file {file_path} does not exist.")
+    return tree, root
+
+
+def get_or_create_maps_list(root):
+    """
+    Get the <list id="maps"> element or create it if it doesn't exist.
+    """
+    maps = root.find(".//list[@id='maps']")
+    if maps is None:
+        maps = ET.SubElement(root, "list", id="maps")
+    return maps
+
+
+def add_uid_to_maps(maps, uid, football_manager_version):
+    """
+    Add a UID to the maps list if it doesn't already exist.
+    """
+    if football_manager_version == "2024":
+        prefix = "r-"
+    else:
+        prefix = ""
+    for record in maps.findall("record"):
+        if record.attrib.get("from") == str(uid):
+            return  # UID already exists
+    ET.SubElement(maps, "record", attrib={"from": str(uid), "to": f"graphics/pictures/person/{prefix}{uid}/portrait"})
+
+
+def create_config_xml(folder_path, football_manager_version):
+    """
+    Create a new config.xml file based on .png files in the folder.
+    """
+    # Prepare the XML structure
+    root = ET.Element("record")
     ET.SubElement(root, "boolean", id="preload", value="false")
     ET.SubElement(root, "boolean", id="amap", value="false")
-
-    # Add the maps section
     maps = ET.SubElement(root, "list", id="maps")
 
-    # Iterate through files in the folder
+    # Add records for each .png file
     for filename in os.listdir(folder_path):
         if filename.endswith(".png"):
-            # Extract the UID from the filename (remove the extension)
             uid = os.path.splitext(filename)[0]
-
-            # Create a record for each file
-            ET.SubElement(maps, "record", attrib={"from": uid, "to": f"graphics/pictures/person/r-{uid}/portrait"})
-
-    # Create the XML tree
-    tree = ET.ElementTree(root)
+            add_uid_to_maps(maps, uid, football_manager_version)
 
     # Save the XML file
     output_path = os.path.join(folder_path, "config.xml")
+    tree = ET.ElementTree(root)
     tree.write(output_path, encoding="utf-8", xml_declaration=True)
     print(f"Config XML created at: {output_path}")
 
 
-def append_to_config_xml(file_path, uid_list):
-    # Check if the file exists
-    file_path = f"{file_path}/config.xml"
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"The file {file_path} does not exist.")
+def append_to_config_xml(folder_path, uid_list, football_manager_version):
+    """
+    Append new UIDs to an existing config.xml file.
+    """
+    file_path = os.path.join(folder_path, "config.xml")
+    tree, root = parse_or_create_xml(file_path, create_if_missing=False)
 
-    # Parse the existing XML file
-    tree = ET.parse(file_path)
-    root = tree.getroot()
-
-    # Find the <list id="maps"> element
-    maps = root.find(".//list[@id='maps']")
-    if maps is None:
-        raise ValueError("The XML file does not contain a <list id='maps'> element.")
+    # Get the maps list
+    maps = get_or_create_maps_list(root)
 
     # Add new UIDs
     for uid in uid_list:
-        # Check if the UID already exists (escaping 'from' in XPath)
-        existing = None
-        for record in maps.findall("record"):
-            if record.attrib.get('from') == str(uid):
-                existing = record
-                break
-        
-        if existing is None:
-            # Add the new record if the UID doesn't exist
-            ET.SubElement(maps, "record", attrib={"from": str(uid), "to": f"graphics/pictures/person/r-{uid}/portrait"})
+        add_uid_to_maps(maps, uid, football_manager_version)
 
-    # Write the updated XML back to the file
+    # Save the updated XML file
     tree.write(file_path, encoding="utf-8", xml_declaration=True)
     print(f"Appended new UIDs to {file_path}")
