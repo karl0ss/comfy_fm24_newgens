@@ -23,8 +23,8 @@ from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 logging.config.dictConfig(LOGGING_CONFIG)
 
-cut = 2
-update = True
+cut = None
+update = False
 use_gpu = False
 
 # Load user configurations

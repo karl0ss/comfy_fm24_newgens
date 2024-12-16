@@ -4,3 +4,5 @@ generated_*/*
 script.log
 **/*.pyc
 *.rtf
+build/
+dist/
