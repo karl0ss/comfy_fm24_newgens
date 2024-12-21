@@ -1,8 +1,8 @@
 venv/*
-config.cfg
 generated_*/*
 script.log
 **/*.pyc
 *.rtf
 build/
 dist/
+user_config.cfg

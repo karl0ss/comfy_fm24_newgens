@@ -35,11 +35,6 @@
     null
   ],
   "hair": [
-    "short",
-    "long",
-    "bald",
-    "buzz cut",
-    "medium-length",
     "curly",
     "wavy",
     "spiky",
@@ -83,8 +78,8 @@
   },
   "hair_length": {
     "0": "Bald",
-    "1": "Short",
-    "2": "Medium",
+    "1": "Really Short",
+    "2": "Medium Length",
     "3": "Long",
     "4": "Bald"
   },

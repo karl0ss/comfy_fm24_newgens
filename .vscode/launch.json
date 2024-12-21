@@ -11,12 +11,14 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": [
-                "--num_inference_steps",
-                "10",
-                "--rtf_file",
-                "./NewGen.rtf"
-            ]
+            // "args": [
+            //     "--num_inference_steps",
+            //     "6",
+            //     "--rtf_file",
+            //     "./AllInDB.rtf",
+            //     "--player_uuid",
+            //     "2000252303"
+            // ]
         }
     ]
 }

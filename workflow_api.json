@@ -2,8 +2,8 @@
   "3": {
     "inputs": {
       "seed": 531046367,
-      "steps": 10,
-      "cfg": 1.0,
+      "steps": 6,
+      "cfg": 1.5,
       "sampler_name": "dpmpp_2m_sde",
       "scheduler": "karras",
       "denoise": 1,

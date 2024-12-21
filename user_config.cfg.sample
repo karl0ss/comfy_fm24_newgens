@@ -1,7 +1,8 @@
-[general]
-football_manager_version = 2024
-output_dir = ./generated_images/
-
 [comfyui]
 comfyui_url = 
 model = realisticVisionV60B1_v51HyperVAE.safetensors
+
+[profile:NewGens]
+football_manager_version = 2024
+rtf_file = ./NewGen.rtf
+output_dir = ./NewGens/
